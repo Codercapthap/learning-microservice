@@ -7,6 +7,11 @@ spring:
   cloud:
     config:
       enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8901
 #Setting the logging levels for the service
 logging:
   level:

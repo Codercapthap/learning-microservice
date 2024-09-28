@@ -30,7 +30,7 @@ public class OrganizationServiceController {
         orgService.updateOrg( org );
     }
 
-    @RequestMapping(value="/{organizationId}",method = RequestMethod.POST)
+    @RequestMapping(value="/",method = RequestMethod.POST)
     public void saveOrganization(@RequestBody Organization org) {
        orgService.saveOrg( org );
     }

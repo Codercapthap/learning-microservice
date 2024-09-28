@@ -29,10 +29,8 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-            authorizeRequest -> authorizeRequest
-                .requestMatchers("/oauth2/**", "/login")
-                .permitAll() // Allow access to OAuth2 endpoints and login page
-                .anyRequest().authenticated())
+            authorizeRequest -> authorizeRequest.requestMatchers("/user").authenticated()
+                .anyRequest().permitAll())
         .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(
             jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(
                 jwtAuthenticationConverter())))

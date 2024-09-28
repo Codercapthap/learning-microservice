@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
@@ -21,10 +22,18 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class ResourceServerConfiguration {
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN")
-            .anyRequest().authenticated()  // Protect all endpoints
+//    http.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.DELETE, "/v1/organizations/**").hasRole("ADMIN")
+//            .anyRequest().authenticated()  // Protect all endpoints
+//        )
+//        .oauth2ResourceServer(oauth2 -> oauth2
+//            .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+//        );
+    http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection if you don't need it
+        .authorizeHttpRequests(authorize -> authorize
+            .anyRequest().permitAll() // Allow all requests without authentication
         )
         .oauth2ResourceServer(oauth2 -> oauth2
             .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
@@ -35,7 +44,8 @@ public class ResourceServerConfiguration {
   @Bean
   public JwtDecoder jwtDecoder() {
     // Configure the decoder to validate JWTs from the authentication server
-    return JwtDecoders.fromIssuerLocation("http://localhost:8901"); // Authentication server's issuer URL
+    return JwtDecoders.fromIssuerLocation(
+        "http://localhost:8901"); // Authentication server's issuer URL
   }
 
   @Bean

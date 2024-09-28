@@ -9,6 +9,15 @@ spring:
   cloud:
     config:
       enabled: true
+    stream:
+      bindings:
+        input:
+          destination: orgChangeTopic
+          content-type: application/json
+          group: licensing-group
+        kafka:
+          binder:
+            brokers: localhost:9092
 eureka:
   instance:
     preferIpAddress: true
@@ -25,6 +34,8 @@ logging:
     org.springframework.web: WARN
     com.thoughtmechanix: DEBUG
     io.github.resilience4j: DEBUG
+    org.springframework.cloud.stream: DEBUG
+    org.apache.kafka: DEBUG
 
 resilience4j:
   contextPropagators: #not work
