@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: authenticationservice
+  profiles:
+    active:
+      default
+  cloud:
+    config:
+      enabled: false
+#Setting the logging levels for the service
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.thoughtmechanix: DEBUG
+    org:
+      springframework:
+        security: DEBUG
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+
+server:
+  contextPath:   /auth
+  port: 8901
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10 #when using count_based, this attribute will specify the number of most recently call being used to calculate the threshold
+        # this mechanism is different from hystrix, hystrix used two attributes to divide the number of call into multiple window and analyse it.
+        failureRateThreshold: 75 #errorThresholdPercentage
+        waitDurationInOpenState: 7s #sleepWindowInMilliseconds
+        minimumNumberOfCalls: 10 #requestVolumeThreshold
+        permittedNumberOfCallsInHalfOpenState: 3
+        eventConsumerBufferSize: 10
+      licenseByOrg:
+        baseConfig: default
+        slidingWindowSize: 3
+  bulkhead:
+    instances:
+      licenseByOrgThreadPool:
+        coreThreadPoolSize: 5
+        maxThreadPoolSize: 10
+        queueCapacity: 10
+        keepAliveDuration: 20s
+  timelimiter:
+    instances:
+      licenseByOrgTimeout:
+        timeoutDuration: 900ms

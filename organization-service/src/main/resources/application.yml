@@ -1,0 +1,37 @@
+server:
+  port: 8882
+spring:
+  config:
+    import: configserver:http://localhost:8888
+  application:
+    name: organizationservice
+  profiles:
+    active:
+      default
+  cloud:
+    config:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        provider:
+          authenticationserver:
+            user-info-uri: http://localhost:8901/user
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+
+#Setting the logging levels for the service
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.thoughtmechanix: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE

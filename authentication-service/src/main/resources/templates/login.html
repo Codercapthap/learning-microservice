@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<form method="POST" action="/login">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required>
+  <br>
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required>
+  <br>
+  <input type="submit" value="Login">
+  <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null}">
+    <p th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}"></p>
+  </div>
+</form>
+</body>
+</html>
