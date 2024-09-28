@@ -16,6 +16,7 @@ spring:
         output:
           destination: orgChangeTopic
           content-type: application/json
+          group: myProducerGroup
         kafka:
           binder:
             brokers: localhost:9092
