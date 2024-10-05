@@ -1,4 +1,6 @@
 spring.jpa.database: "POSTGRESQL"
+redis.server: "localhost"
+redis.port: "6379"
 spring.datasource.platform:  "postgres"
 spring.jpa.show-sql: "true"
 spring.database.driverClassName: "org.postgresql.Driver"

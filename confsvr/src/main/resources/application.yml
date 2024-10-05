@@ -19,8 +19,8 @@ spring:
     config:
       server:
         native:
-          searchLocations: file:///${user.home}/workspace/java-microservice/spmia-chapter4/confsvr/src/main/resources/config/licensingservice,
-            file:///${user.home}/workspace/java-microservice/spmia-chapter4/confsvr/src/main/resources/config/organizationservice
+          searchLocations: file:///${user.home}/workspace/java-microservice/learning-microservice/confsvr/src/main/resources/config/licensingservice,
+            file:///${user.home}/workspace/java-microservice/learning-microservice/confsvr/src/main/resources/config/organizationservice
 
 
 ####
